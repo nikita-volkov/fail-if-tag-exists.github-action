@@ -1,0 +1,26 @@
+name: Ensure that a tag does not exist
+description: Ensure that a tag does not exist
+author: Nikita Volkov
+inputs:
+  tag:
+    description: |
+      The tag to check.
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Check if tag exists
+      uses: mukunku/tag-exists-action@v1.2.0
+      id: check-tag
+      with: 
+        tag: |
+          ${{ inputs.tag }}
+
+    - name: Fail if tag exists
+      shell: bash
+      run: |
+        if [ ${{ steps.check-tag.outputs.exists }} == true ]
+        then
+          echo "Tag ${{ inputs.tag }} already exists"
+          exit 1
+        fi
