@@ -9,12 +9,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Check if tag exists
+    - name: Look up the tag
       uses: mukunku/tag-exists-action@v1.2.0
       id: check-tag
       with: 
-        tag: |
-          ${{ inputs.tag }}
+        tag: ${{ inputs.tag }}
 
     - name: Fail if tag exists
       shell: bash
